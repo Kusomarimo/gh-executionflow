@@ -33,9 +33,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+        # Assign a unique id to every step
+        id: run-tests
         run: npm run test
       - name: Upload test report
-        # Run if Test code step fails
+        # Run only if Test code step fails
+        # Check Github documentation for contexts (steps)
+        # https://docs.github.com/en/github-ae@latest/actions/learn-github-actions/contexts
+        if: steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
