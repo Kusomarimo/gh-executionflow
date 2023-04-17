@@ -40,7 +40,7 @@ jobs:
         # Run only if Test code step fails
         # Check Github documentation for contexts (steps)
         # https://docs.github.com/en/github-ae@latest/actions/learn-github-actions/contexts
-        if: steps.run-tests.outcome == 'failure'
+        if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
