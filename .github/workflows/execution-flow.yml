@@ -15,7 +15,8 @@ jobs:
         with:
           # Local node modules folder is faster than caching the global npm folder
           # Speed up the caching
-          path: node_modules
+          # path: node_modules
+          path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         # Skip this step if we successfully used the cache
