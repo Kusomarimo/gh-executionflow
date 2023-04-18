@@ -77,6 +77,8 @@ jobs:
     # Defines the workflow we want to reuse
     # reusable.yml will be kicked off whenver the 'deploy' job starts
     uses: ./.github/workflows/reusable.yml
+    with:
+      artifact-name: dist-files
   
   report:
     # report will run if any other job failed
