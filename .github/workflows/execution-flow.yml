@@ -82,10 +82,14 @@ jobs:
   
   report:
     # report will run if any other job failed
+    # lint, deploy has to be added as prerequisite
+    # Otherwise it will start at the beginning of the workflow run so no other jobs have failed yet. 
+    # Github is not waiting until other job has failed
+    needs: [lint, deploy]
     if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Output information
         run: |
           echo "Something went wrong"
-          echo "${{ github}}"
+          echo "${{ github }}"
