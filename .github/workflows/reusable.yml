@@ -10,8 +10,20 @@ on:
         # default value
         default: dist
         type: string
+    outputs:
+      result:
+        description: The result of the deployment operation
+        # jobs Context
+        # Get output of the deployed job
+        value: ${{ jobs.deploy.outputs.outcome }}
+    # secrets:
+      # some-secret:
+        # required: false
+    
 jobs:
   deploy:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -19,7 +31,15 @@ jobs:
         with:
           # inputs context object
           name: ${{ inputs.artifact-name }}
+        # secrets:
+          # some-secret: ${{ secrets.some-secret }}
       - name: List files
         run: ls
       - name: Output information
         run: echo "Deploying & uploading..."
+      - name: Set result output
+        id: set-result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT
+        # As mentioned earlier, you should not use ::set-output anymore
+        # Instead, output a value like this:
+        # echo "step-result=success" >> $GITHUB_OUTPUT
