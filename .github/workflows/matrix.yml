@@ -8,6 +8,15 @@ jobs:
       matrix:
         node-version: [12, 14, 16]
         operating-system: [ubuntu-latest, windows-latest]
+        # include add only 1 combination
+        # add in the array will add 2 combinations 18-ubuntu-latest and 18-windows-latest
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        # Exclude the combinations specified below
+        exclude:
+          - node-version: 12
+            operating-system: windows-latest
     # Run this job multiple times per value in the 'operating-system' array
     # will run in parallel operating-system: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.operating-system }}
